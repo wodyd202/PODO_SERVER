@@ -14,7 +14,6 @@ import com.ljy.podo.attention.service.registerAttention.RegisterAttention;
 import com.ljy.podo.attention.service.registerAttention.service.AttentionRegisterService;
 import com.ljy.podo.attention.service.util.RegisterAttentionValidator;
 import com.ljy.podo.portfolio.FakePortfolioRepository;
-import com.ljy.podo.portfolio.PortfolioId;
 import com.ljy.podo.portfolio.PortfolioTest;
 import com.ljy.podo.portfolio.aggregate.Portfolio;
 import com.ljy.podo.portfolio.aggregate.exception.PortfolioNotFindException;
@@ -52,7 +51,7 @@ public class AttentionRegisterServiceTest implements PortfolioTest{
 		
 		AttentionSearchDTO search = AttentionSearchDTO
 				.builder()
-				.portfolioId(new PortfolioId("아이디"))
+				.portfolioId("아이디")
 				.page(0)
 				.size(10)
 				.build();

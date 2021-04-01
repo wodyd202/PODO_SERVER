@@ -35,6 +35,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-today").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio").permitAll()
 
+		.antMatchers(HttpMethod.GET,"/api/v1/attention").permitAll()
+		.antMatchers(HttpMethod.POST,"/api/v1/attention").authenticated()
+		.antMatchers(HttpMethod.PUT,"/api/v1/attention").authenticated()
+		.antMatchers(HttpMethod.DELETE,"/api/v1/attention").authenticated()
 		.and()
 		.exceptionHandling()
 		.accessDeniedHandler(new OAuth2AccessDeniedHandler());

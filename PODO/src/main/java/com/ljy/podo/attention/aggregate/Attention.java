@@ -1,6 +1,7 @@
 package com.ljy.podo.attention.aggregate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -48,7 +49,7 @@ public class Attention {
 	@Enumerated(EnumType.STRING)
 	private AttentionState state;
 	
-	private LocalDate createDate;
+	private LocalDateTime createDate;
 	
 	public boolean isDelete() {
 		return this.state == AttentionState.DELETE;
@@ -67,7 +68,8 @@ public class Attention {
 		this.portfolioId = new PortfolioId(registerAttention.getPortfolioId());
 		this.content = new Content(registerAttention.getContent());
 		this.writer = new Writer(registerAttention.getWriter());
-		this.createDate = LocalDate.now();
+		this.state = AttentionState.CREATE;
+		this.createDate = LocalDateTime.now();
 	}
 
 }

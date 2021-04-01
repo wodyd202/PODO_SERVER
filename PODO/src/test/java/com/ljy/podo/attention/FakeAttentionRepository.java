@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.ljy.podo.attention.aggregate.Attention;
 import com.ljy.podo.attention.infrastructure.AttentionRepository;
 import com.ljy.podo.attention.service.loadAttention.AttentionSearchDTO;
+import com.ljy.podo.attention.service.loadAttention.projection.AttentionListData;
 
 public class FakeAttentionRepository implements AttentionRepository {
 
@@ -23,7 +24,7 @@ public class FakeAttentionRepository implements AttentionRepository {
 		for (int i = 0; i < repository.size(); i++) {
 			if (search.getPortfolioId() != null) {
 				Attention attention = repository.get(i);
-				if (attention.getPortfolioId().equals(search.getPortfolioId())) {
+				if (attention.getPortfolioId().toString().equals(search.getPortfolioId())) {
 					count++;
 				}
 			}
@@ -39,6 +40,11 @@ public class FakeAttentionRepository implements AttentionRepository {
 			}
 		}
 		return Optional.ofNullable(null);
+	}
+
+	@Override
+	public List<AttentionListData> findAll(AttentionSearchDTO search) {
+		return null;
 	}
 
 }

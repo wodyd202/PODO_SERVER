@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import com.ljy.podo.attention.AttentionState;
 import com.ljy.podo.attention.aggregate.QAttention;
 import com.ljy.podo.portfolio.PortfolioId;
 import com.ljy.podo.portfolio.ShowType;
@@ -92,7 +93,7 @@ public class SimplePortfolioRepository implements PortfolioRepository{
 						ExpressionUtils.as(
 								JPAExpressions.select(attention.count())
 												.from(attention)
-												.where(attention.portfolioId().eq(portfolio.id()))
+												.where(attention.portfolioId().eq(portfolio.id()).and(attention.state.eq(AttentionState.CREATE)))
 						, "attentionCnt")
 					))
 				.where(createBooleanExpression(searchDTO))

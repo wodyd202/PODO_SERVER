@@ -24,16 +24,23 @@ public class SwaggerConfig {
                 .build();
     }
 
-    @Bean
+    @SuppressWarnings("unchecked")
+	@Bean
     public Docket userApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("Podo")
                 .apiInfo(this.apiInfo("Podo API"))
                 .select()
-                .apis(Predicates.or(RequestHandlerSelectors
+                .apis(
+                		Predicates.or(
+        				RequestHandlerSelectors
                         .basePackage("com.ljy.podo.user.api"),
                         RequestHandlerSelectors
-    					.basePackage("com.ljy.podo.portfolio.api")))
+                        .basePackage("com.ljy.podo.attention.api"),
+                        RequestHandlerSelectors
+    					.basePackage("com.ljy.podo.portfolio.api")
+    					)
+            		)
                 .paths(PathSelectors.ant("/api/v1/**"))
                 .build();
     }

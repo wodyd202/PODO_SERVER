@@ -2,12 +2,15 @@ package com.ljy.podo.attention.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ljy.podo.attention.service.deleteAttention.DeleteAttention;
+import com.ljy.podo.attention.service.deleteAttention.service.AttentionDeleteService;
 import com.ljy.podo.attention.service.registerAttention.RegisterAttention;
 import com.ljy.podo.attention.service.registerAttention.service.AttentionRegisterService;
 import com.ljy.podo.attention.service.updateAttention.UpdateAttention;
@@ -24,6 +27,7 @@ public class AttentionUpdateAPI {
 	
 	private final AttentionRegisterService attentionRegisterService;
 	private final AttentionUpdateService attentionUpdateService;
+	private final AttentionDeleteService attentionDeleteService;
 	
 	@PostMapping
 	public ResponseEntity<RegisterAttention> register(@RequestBody RegisterAttention registerAttention, @LoginUser User user){
@@ -37,5 +41,12 @@ public class AttentionUpdateAPI {
 		updateAttention.setUpdater(user);
 		attentionUpdateService.register(updateAttention);
 		return new ResponseEntity<>(updateAttention,HttpStatus.OK);
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<DeleteAttention> delete(@RequestBody DeleteAttention deleteAttention, @LoginUser User user){
+		deleteAttention.setDeleter(user);
+		attentionDeleteService.delete(deleteAttention);
+		return new ResponseEntity<>(deleteAttention,HttpStatus.OK);
 	}
 }

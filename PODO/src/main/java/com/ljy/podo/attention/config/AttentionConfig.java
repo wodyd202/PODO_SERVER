@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.ljy.podo.attention.infrastructure.SimpleAttentionRepository;
+import com.ljy.podo.attention.service.deleteAttention.service.AttentionDeleteService;
 import com.ljy.podo.attention.service.registerAttention.service.AttentionRegisterService;
 import com.ljy.podo.attention.service.updateAttention.service.AttentionUpdateService;
 import com.ljy.podo.attention.service.util.RegisterAttentionValidator;
@@ -38,5 +39,10 @@ public class AttentionConfig {
 	@Bean
 	public AttentionUpdateService attentionUpdateService() {
 		return new AttentionUpdateService(updateAttentionValidator(), attentionRepository);
+	}
+	
+	@Bean
+	public AttentionDeleteService attentionDeleteService() {
+		return new AttentionDeleteService(attentionRepository);
 	}
 }
