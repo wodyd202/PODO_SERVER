@@ -1,6 +1,6 @@
 package com.ljy.podo.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,11 +26,13 @@ public class UserUpdateServiceTest extends UserTest{
 
 	UserRepository fakeUserRepository;
 	UserUpdateService userUpdateService;
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@BeforeEach
 	void setUp() {
+		passwordEncoder = new BCryptPasswordEncoder();
 		fakeUserRepository = new FakeUserRepository();
-		userUpdateService = new UserUpdateService(new UpdateUserValiator() ,fakeUserRepository, new BCryptPasswordEncoder());
+		userUpdateService = new UserUpdateService(new UpdateUserValiator() ,fakeUserRepository, passwordEncoder);
 		RegisterUser registerUser = createUser("wodyd202@naver.com","testestestes","컴퓨터 공학");
 		fakeUserRepository.save(registerUser.toEntity());
 	}
@@ -41,6 +43,6 @@ public class UserUpdateServiceTest extends UserTest{
 		UpdateUser updateUser = updateUser("wodyd202@naver.com", "update", "profile");
 		userUpdateService.register(updateUser);
 		User user = fakeUserRepository.findByEmail(new Email("wodyd202@naver.com")).get();
-		assertThat(user.getPassword()).isEqualTo(new Password("update"));
+		assertTrue(passwordEncoder.matches(updateUser.getPassword(),user.getPassword().toString()));
 	}
 }

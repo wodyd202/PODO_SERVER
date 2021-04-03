@@ -24,6 +24,8 @@ public class RegisterPortfolio {
 	private String content;
 	private ShowType showType;
 	private PortfolioState state;
+	
+	@JsonIgnore
 	private String writer;
 
 	@JsonIgnore

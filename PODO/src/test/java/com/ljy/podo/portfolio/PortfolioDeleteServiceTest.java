@@ -22,7 +22,7 @@ public class PortfolioDeleteServiceTest implements PortfolioTest{
 	@BeforeEach
 	void setUp() {
 		portfolioRepository = new FakePortfolioRepository();
-		Portfolio createMockPortfolio = createMockPortfolio("아이디");
+		Portfolio createMockPortfolio = createMockPortfolio("아이디","wodyd202@naver.com");
 		portfolioRepository.save(createMockPortfolio);
 	}
 	

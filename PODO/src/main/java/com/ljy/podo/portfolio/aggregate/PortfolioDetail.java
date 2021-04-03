@@ -1,6 +1,5 @@
 package com.ljy.podo.portfolio.aggregate;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.AttributeOverride;

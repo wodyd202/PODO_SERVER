@@ -1,5 +1,6 @@
 package com.ljy.podo.attention.service.registerAttention;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ljy.podo.attention.AttentionId;
 import com.ljy.podo.attention.aggregate.Attention;
 import com.ljy.podo.user.aggregate.User;
@@ -17,6 +18,8 @@ import lombok.NoArgsConstructor;
 public class RegisterAttention {
 	private String portfolioId;
 	private String content;
+	
+	@JsonIgnore
 	private String writer;
 	
 	public void setWriter(User user) {

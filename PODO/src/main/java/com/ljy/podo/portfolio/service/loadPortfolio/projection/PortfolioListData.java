@@ -20,4 +20,5 @@ public class PortfolioListData {
 	private String images;
 	private PortfolioState state;
 	private long attentionCnt;
+	private long interestCnt;
 }

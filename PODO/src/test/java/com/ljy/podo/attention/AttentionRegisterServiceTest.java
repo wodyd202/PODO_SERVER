@@ -32,7 +32,7 @@ public class AttentionRegisterServiceTest implements PortfolioTest{
 		attentionRepository = new FakeAttentionRepository();
 		
 		portfolioRepository = new FakePortfolioRepository();
-		Portfolio createMockPortfolio = createMockPortfolio("아이디");
+		Portfolio createMockPortfolio = createMockPortfolio("아이디","wodyd202@naver.com");
 		portfolioRepository.save(createMockPortfolio);
 
 		attentionRegisterService = new AttentionRegisterService(attentionValidator,portfolioRepository,attentionRepository);

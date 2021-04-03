@@ -4,7 +4,7 @@ import com.ljy.podo.portfolio.aggregate.Portfolio;
 import com.ljy.podo.portfolio.service.registerPortfolio.RegisterPortfolio;
 
 public interface PortfolioTest {
-	default public Portfolio createMockPortfolio(String id) {
+	default public Portfolio createMockPortfolio(String id,String writer) {
 		return new Portfolio(new PortfolioId(id), 
 				RegisterPortfolio.builder()
 				.title("타이틀")
@@ -12,6 +12,6 @@ public interface PortfolioTest {
 				.content("내용")
 				.showType(ShowType.PUBLIC)
 				.state(PortfolioState.CREATE)
-				.writer("wodyd202@naver.com").build());
+				.writer(writer).build());
 	}
 }

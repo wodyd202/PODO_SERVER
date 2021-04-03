@@ -38,7 +38,9 @@ public class SwaggerConfig {
                         RequestHandlerSelectors
                         .basePackage("com.ljy.podo.attention.api"),
                         RequestHandlerSelectors
-    					.basePackage("com.ljy.podo.portfolio.api")
+    					.basePackage("com.ljy.podo.portfolio.api"),
+    					RequestHandlerSelectors
+    					.basePackage("com.ljy.podo.interest.api")
     					)
             		)
                 .paths(PathSelectors.ant("/api/v1/**"))

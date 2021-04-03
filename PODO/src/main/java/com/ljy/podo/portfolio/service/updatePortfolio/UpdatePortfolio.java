@@ -1,5 +1,6 @@
 package com.ljy.podo.portfolio.service.updatePortfolio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ljy.podo.portfolio.PortfolioState;
 import com.ljy.podo.portfolio.ShowType;
 import com.ljy.podo.user.aggregate.User;
@@ -21,6 +22,8 @@ public class UpdatePortfolio {
 	private String content;
 	private ShowType showType;
 	private PortfolioState state;
+	
+	@JsonIgnore
 	private String updater;
 	
 	public void setUpdater(User updater) {

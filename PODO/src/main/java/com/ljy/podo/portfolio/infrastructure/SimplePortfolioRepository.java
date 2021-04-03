@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ljy.podo.attention.AttentionState;
 import com.ljy.podo.attention.aggregate.QAttention;
+import com.ljy.podo.interest.aggregate.QInterest;
 import com.ljy.podo.portfolio.PortfolioId;
 import com.ljy.podo.portfolio.ShowType;
 import com.ljy.podo.portfolio.Writer;
@@ -34,6 +35,7 @@ public class SimplePortfolioRepository implements PortfolioRepository{
 	private QPortfolio portfolio = QPortfolio.portfolio;
 	private QPortfolioDetail portfolioDetail = QPortfolioDetail.portfolioDetail;
 	private QAttention attention = QAttention.attention;
+	private QInterest interest = QInterest.interest;
 	
 	@Override
 	public void save(Portfolio portfolio) {
@@ -94,7 +96,12 @@ public class SimplePortfolioRepository implements PortfolioRepository{
 								JPAExpressions.select(attention.count())
 												.from(attention)
 												.where(attention.portfolioId().eq(portfolio.id()).and(attention.state.eq(AttentionState.CREATE)))
-						, "attentionCnt")
+						, "attentionCnt"),
+						ExpressionUtils.as(
+								JPAExpressions.select(interest.count())
+												.from(interest)
+												.where(interest.portfolioId().eq(portfolio.id()))
+						, "interestCnt")
 					))
 				.where(createBooleanExpression(searchDTO))
 				.innerJoin(portfolio.detail(), portfolioDetail)

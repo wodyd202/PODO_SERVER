@@ -30,7 +30,7 @@ public class PortfolioRegisterServiceTest_2 implements PortfolioTest{
 	@DisplayName("정상 등록 케이스")
 	public void register_1() {
 		assertThrows(InvalidPortfolioException.class, ()->{
-			Portfolio createMockPortfolio = createMockPortfolio("아이디");
+			Portfolio createMockPortfolio = createMockPortfolio("아이디","wodyd202@naver.com");
 			fakePortfolioRepository.save(createMockPortfolio);
 			UpdatePortfolio updatePortfolio = UpdatePortfolio.builder()
 					.id("아이디")

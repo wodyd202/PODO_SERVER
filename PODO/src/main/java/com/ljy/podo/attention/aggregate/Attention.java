@@ -1,6 +1,5 @@
 package com.ljy.podo.attention.aggregate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.AttributeOverride;
