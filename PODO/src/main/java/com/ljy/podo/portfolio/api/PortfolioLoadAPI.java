@@ -28,6 +28,16 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioLoadAPI {
 	private final PortfolioLoadService portfolioRepository;
 
+	@GetMapping("all")
+	public ResponseEntity<PortfolioList> findAll(PortfolioSearchDTO searchDTO, @LoginUser User user) {
+		if (searchDTO.getEmail() == null) {
+			throw new InvalidPortfolioException("글 작성자를 입력해주세요.", "email");
+		}
+		PortfolioList portfolioList = new PortfolioList(portfolioRepository.findAll(searchDTO),
+				portfolioRepository.countAll(searchDTO));
+		return new ResponseEntity<>(portfolioList, HttpStatus.OK);
+	}
+
 	@GetMapping("is-temporary")
 	public ResponseEntity<List<PortfolioListData>> findAllbyIsTemporary(PortfolioSearchDTO searchDTO,
 			@LoginUser User user) {

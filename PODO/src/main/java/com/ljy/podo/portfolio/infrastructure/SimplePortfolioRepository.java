@@ -12,6 +12,7 @@ import com.ljy.podo.attention.AttentionState;
 import com.ljy.podo.attention.aggregate.QAttention;
 import com.ljy.podo.interest.aggregate.QInterest;
 import com.ljy.podo.portfolio.PortfolioId;
+import com.ljy.podo.portfolio.PortfolioState;
 import com.ljy.podo.portfolio.ShowType;
 import com.ljy.podo.portfolio.Writer;
 import com.ljy.podo.portfolio.aggregate.Portfolio;
@@ -113,11 +114,15 @@ public class SimplePortfolioRepository implements PortfolioRepository{
 
 	private BooleanBuilder createBooleanExpression(PortfolioSearchDTO searchDTO) {
 		BooleanBuilder builder = new BooleanBuilder();
-		builder.and(portfolio.state.eq(searchDTO.getState()));
 		if(searchDTO.getShowType() == null) {
 			builder.and(portfolio.showType.eq(ShowType.PUBLIC));
 		}else {
 			builder.and(portfolio.showType.eq(searchDTO.getShowType()));
+		}
+		if(searchDTO.getState() == null) {
+			builder.and(portfolio.state.eq(PortfolioState.CREATE));
+		}else {
+			builder.and(portfolio.state.eq(searchDTO.getState()));
 		}
 		if(searchDTO.getEmail() != null) {
 			builder.and(portfolio.writer().eq(new Writer(searchDTO.getEmail())));
