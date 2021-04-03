@@ -1,6 +1,6 @@
 package com.ljy.podo.portfolio.service.loadPortfolio.projection;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.ljy.podo.portfolio.PortfolioState;
 import com.ljy.podo.portfolio.ShowType;
@@ -17,8 +17,8 @@ public class PortfolioFullData {
 	private String major;
 	private String header;
 	private String content;
-	private LocalDate createDate;
-	private LocalDate lastModify;
+	private Date createDate;
+	private Date lastModify;
 	private String images;
 	private PortfolioState state;
 	private ShowType showType;

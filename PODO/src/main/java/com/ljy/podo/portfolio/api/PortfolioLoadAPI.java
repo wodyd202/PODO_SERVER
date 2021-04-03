@@ -13,11 +13,11 @@ import com.ljy.podo.config.security.oauth.LoginUser;
 import com.ljy.podo.portfolio.PortfolioId;
 import com.ljy.podo.portfolio.aggregate.exception.InvalidPortfolioException;
 import com.ljy.podo.portfolio.aggregate.exception.PortfolioNotFindException;
-import com.ljy.podo.portfolio.infrastructure.SimplePortfolioRepository;
 import com.ljy.podo.portfolio.service.loadPortfolio.PortfolioSearchDTO;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioFullData;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioList;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioListData;
+import com.ljy.podo.portfolio.service.loadPortfolio.service.PortfolioLoadService;
 import com.ljy.podo.user.aggregate.User;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("api/v1/portfolio")
 @RequiredArgsConstructor
 public class PortfolioLoadAPI {
-	private final SimplePortfolioRepository portfolioRepository;
+	private final PortfolioLoadService portfolioRepository;
 
 	@GetMapping("is-temporary")
 	public ResponseEntity<List<PortfolioListData>> findAllbyIsTemporary(PortfolioSearchDTO searchDTO,

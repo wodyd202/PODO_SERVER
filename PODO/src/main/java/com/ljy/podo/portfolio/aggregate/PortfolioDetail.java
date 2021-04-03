@@ -1,6 +1,7 @@
 package com.ljy.podo.portfolio.aggregate;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -8,6 +9,8 @@ import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.ljy.podo.portfolio.Content;
 import com.ljy.podo.portfolio.Images;
@@ -35,12 +38,14 @@ public class PortfolioDetail {
 	@Embedded
 	@AttributeOverride(name = "value", column = @Column(nullable = false, name = "images"))
 	private Images images;
-	private LocalDate lastModify;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastModify;
 
 	protected void update(UpdatePortfolio updatePortfolio, String images) {
 		this.content = new Content(updatePortfolio.getContent());
 		this.images = new Images(images);
-		this.lastModify = LocalDate.now();
+		this.lastModify = new Date();
 	}
 
 	public PortfolioDetail(PortfolioId seq, Content content, Images images) {

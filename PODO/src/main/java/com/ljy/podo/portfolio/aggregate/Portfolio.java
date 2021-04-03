@@ -1,6 +1,6 @@
 package com.ljy.podo.portfolio.aggregate;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -12,6 +12,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.ljy.podo.portfolio.Content;
 import com.ljy.podo.portfolio.Header;
@@ -66,7 +68,8 @@ public class Portfolio {
 	@Enumerated(EnumType.STRING)
 	private ShowType showType;
 	
-	private LocalDate createDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private PortfolioDetail detail;
@@ -116,7 +119,7 @@ public class Portfolio {
 		this.detail = new PortfolioDetail(
 				this.id,new Content(registerPortofolio.getContent()),
 				new Images(convertContent2Images(registerPortofolio.getContent())));
-		this.createDate = LocalDate.now();
+		this.createDate = new Date();
 	}
 
 }

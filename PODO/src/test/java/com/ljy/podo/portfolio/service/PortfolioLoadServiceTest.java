@@ -1,6 +1,6 @@
 package com.ljy.podo.portfolio.service;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -61,9 +61,8 @@ public class PortfolioLoadServiceTest {
 				.page(0)
 				.size(9)
 				.email("wodyd202@naver.com")
-				.startDate(LocalDate.now())
-				.endDate(LocalDate.now())
 				.build();
+		searchDTO.setToday();
 		portfolioLoadService.findAll(searchDTO);
 		System.out.println("===============================================================================");
 	}

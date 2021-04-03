@@ -1,6 +1,8 @@
 package com.ljy.podo.portfolio.service.loadPortfolio;
 
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.ljy.podo.portfolio.PortfolioState;
 import com.ljy.podo.portfolio.ShowType;
@@ -17,17 +19,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PortfolioSearchDTO {
+	private final int ONE_DAY = 86400000;
 	private String email;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private Date startDate;
+	private Date endDate;
 	private int size;
 	private int page;
 	private PortfolioState state;
 	private ShowType showType;
 
 	public void setToday() {
-		this.startDate = LocalDate.now();
-		this.endDate = LocalDate.now();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			this.startDate = format.parse(format.format(new Date()));
+			this.endDate = format.parse(format.format(new Date()));
+			endDate.setTime(this.endDate.getTime() + ONE_DAY);
+			this.endDate = new Date(this.endDate.getTime());
+		} catch (ParseException e) {
+		}
 		this.state = PortfolioState.CREATE;
 	}
 	

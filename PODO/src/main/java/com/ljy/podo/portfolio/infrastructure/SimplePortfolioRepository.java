@@ -99,7 +99,8 @@ public class SimplePortfolioRepository implements PortfolioRepository{
 				.where(createBooleanExpression(searchDTO))
 				.innerJoin(portfolio.detail(), portfolioDetail)
 				.limit(searchDTO.getSize())
-				.offset(searchDTO.getSize() * searchDTO.getPage());
+				.offset(searchDTO.getSize() * searchDTO.getPage())
+				.orderBy(portfolio.createDate.desc());
 		return query.fetch();
 	}
 
