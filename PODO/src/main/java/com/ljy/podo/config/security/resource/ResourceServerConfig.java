@@ -33,6 +33,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-temporary").authenticated()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-today").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/equal-major").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio").permitAll()
 
 		.antMatchers(HttpMethod.GET,"/api/v1/attention").permitAll()

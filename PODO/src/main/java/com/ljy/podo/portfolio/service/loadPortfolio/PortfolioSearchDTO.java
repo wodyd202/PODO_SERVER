@@ -25,9 +25,16 @@ public class PortfolioSearchDTO {
 	private Date endDate;
 	private int size;
 	private int page;
+	private String major;
 	private PortfolioState state;
 	private ShowType showType;
 
+	public void setMajor(User user) {
+		this.major = user.getMajor().toString();
+		this.showType = ShowType.PUBLIC;
+		this.state = PortfolioState.CREATE; 
+	}
+	
 	public void setToday() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {

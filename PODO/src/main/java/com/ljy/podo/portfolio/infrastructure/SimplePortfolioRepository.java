@@ -21,6 +21,7 @@ import com.ljy.podo.portfolio.aggregate.QPortfolioDetail;
 import com.ljy.podo.portfolio.service.loadPortfolio.PortfolioSearchDTO;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioFullData;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioListData;
+import com.ljy.podo.user.Major;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
@@ -114,6 +115,9 @@ public class SimplePortfolioRepository implements PortfolioRepository{
 
 	private BooleanBuilder createBooleanExpression(PortfolioSearchDTO searchDTO) {
 		BooleanBuilder builder = new BooleanBuilder();
+		if(searchDTO.getMajor() != null) {
+			builder.and(portfolio.major().eq(new Major(searchDTO.getMajor())));
+		}
 		if(searchDTO.getShowType() == null) {
 			builder.and(portfolio.showType.eq(ShowType.PUBLIC));
 		}else {

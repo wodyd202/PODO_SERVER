@@ -28,6 +28,14 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioLoadAPI {
 	private final PortfolioLoadService portfolioRepository;
 
+	@GetMapping("equal-major")
+	public ResponseEntity<PortfolioList> findByMajor(PortfolioSearchDTO searchDTO, @LoginUser User user){
+		searchDTO.setMajor(user);
+		PortfolioList portfolioList = new PortfolioList(portfolioRepository.findAll(searchDTO),
+				portfolioRepository.countAll(searchDTO));
+		return new ResponseEntity<>(portfolioList, HttpStatus.OK);
+	}
+	
 	@GetMapping("all")
 	public ResponseEntity<PortfolioList> findAll(PortfolioSearchDTO searchDTO, @LoginUser User user) {
 		if (searchDTO.getEmail() == null) {
