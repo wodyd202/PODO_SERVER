@@ -21,4 +21,10 @@ public class FakeUserRepository implements UserRepository {
 		return Optional.ofNullable(repository.get(email.toString()));
 	}
 
+	@Override
+	public long countAll() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

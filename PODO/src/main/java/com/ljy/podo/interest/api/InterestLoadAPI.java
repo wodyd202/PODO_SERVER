@@ -21,6 +21,11 @@ import lombok.RequiredArgsConstructor;
 public class InterestLoadAPI {
 	private final SimpleInterestRepository repository;
 
+	@GetMapping("count")
+	public ResponseEntity<Long> countAll(){
+		return new ResponseEntity<>(repository.countAll(),HttpStatus.OK);
+	}
+	
 	@GetMapping
 	public ResponseEntity<InterestFullData> find(InterestSearchDTO searchDTO, @LoginUser User user) {
 		searchDTO.setInterester(user);

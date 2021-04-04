@@ -29,6 +29,13 @@ public class SimpleInterestRepository implements InterestRepository {
 	}
 
 	@Override
+	public long countAll() {
+		JPAQuery<InterestFullData> query = new JPAQuery<>(em);
+		query.from(interest);
+		return query.fetchCount();
+	}
+	
+	@Override
 	public InterestFullData findByPortfolioId(InterestSearchDTO searchDTO) {
 		JPAQuery<InterestFullData> query = new JPAQuery<>(em);
 		return query.from(interest)
@@ -45,5 +52,6 @@ public class SimpleInterestRepository implements InterestRepository {
 		query.where(interest.portfolioId().eq(new PortfolioId(findByPortfolioId.getPortfolioId()))
 				.and(interest.interester().eq(new Interester(findByPortfolioId.getInterester())))).execute();
 	}
+
 
 }

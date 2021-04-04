@@ -10,4 +10,6 @@ public interface InterestRepository {
 	void save(Interest entity);
 
 	void remove(InterestFullData findByPortfolioId);
+	
+	long countAll();
 }

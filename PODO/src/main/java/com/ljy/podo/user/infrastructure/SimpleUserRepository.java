@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.ljy.podo.user.Email;
+import com.ljy.podo.user.UserState;
 import com.ljy.podo.user.aggregate.QUser;
 import com.ljy.podo.user.aggregate.User;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -26,6 +27,14 @@ public class SimpleUserRepository implements UserRepository{
 	}
 
 	@Override
+	public long countAll() {
+		JPAQuery<User> query = new JPAQuery<>(em);
+		query.from(user)
+			.where(user.state.eq(UserState.CAN_BE_USED));
+		return query.fetchCount();
+	}
+	
+	@Override
 	public Optional<User> findByEmail(Email email) {
 		JPAQuery<User> query = new JPAQuery<>(em);
 		return Optional.ofNullable(
@@ -34,5 +43,4 @@ public class SimpleUserRepository implements UserRepository{
 					.fetchOne()
 				);
 	}
-
 }

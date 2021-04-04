@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ljy.podo.config.security.oauth.LoginUser;
 import com.ljy.podo.portfolio.PortfolioId;
+import com.ljy.podo.portfolio.PortfolioState;
 import com.ljy.podo.portfolio.aggregate.exception.InvalidPortfolioException;
 import com.ljy.podo.portfolio.aggregate.exception.PortfolioNotFindException;
 import com.ljy.podo.portfolio.service.loadPortfolio.PortfolioSearchDTO;
@@ -28,6 +29,14 @@ import lombok.RequiredArgsConstructor;
 public class PortfolioLoadAPI {
 	private final PortfolioLoadService portfolioRepository;
 
+	@GetMapping("count")
+	public ResponseEntity<Long> countAll(){
+		PortfolioSearchDTO searchDTO = PortfolioSearchDTO.builder()
+				.state(PortfolioState.CREATE)
+				.build();
+		return new ResponseEntity<>(portfolioRepository.countAll(searchDTO),HttpStatus.OK);
+	}
+	
 	@GetMapping("equal-major")
 	public ResponseEntity<PortfolioList> findByMajor(PortfolioSearchDTO searchDTO, @LoginUser User user){
 		searchDTO.setMajor(user);

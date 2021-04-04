@@ -19,6 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 			.formLogin().disable();
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET,"/api/v1/user").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/v1/user/count").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/v1/user/is-dup").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/v1/user").permitAll()
 		.antMatchers(HttpMethod.PUT,"/api/v1/user").authenticated()
@@ -34,6 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-temporary").authenticated()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-today").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/equal-major").permitAll()
+		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/count").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio").permitAll()
 
 		.antMatchers(HttpMethod.GET,"/api/v1/attention").permitAll()
@@ -47,6 +49,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.DELETE,"/api/v1/re-attention").authenticated()
 
 		.antMatchers(HttpMethod.GET,"/api/v1/interest").authenticated()
+		.antMatchers(HttpMethod.GET,"/api/v1/interest/count").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/v1/interest").authenticated()
 		.antMatchers(HttpMethod.DELETE,"/api/v1/interest").authenticated()
 		.and()

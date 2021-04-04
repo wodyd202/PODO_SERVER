@@ -22,6 +22,10 @@ public class UserLoadService implements UserDetailsService{
 		
 	private final SimpleUserRepository userRepository;
 	
+	public long countAll() {
+		return userRepository.countAll();
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		if(!isValidEmail(username)) {

@@ -21,6 +21,11 @@ public class UserLoadAPI {
 	private final RegisterUserValiator registerUserValiator;
 	private final UserLoadService userLoadService;
 
+	@GetMapping("count")
+	public ResponseEntity<Long> countAll(){
+		return new ResponseEntity<>(userLoadService.countAll(), HttpStatus.OK);
+	}
+	
 	@GetMapping("is-dup")
 	public ResponseEntity<Void> dupUser(@RequestParam(required = true, defaultValue = "") String email) {
 		boolean isEmail = registerUserValiator.isValidEmail(email);
