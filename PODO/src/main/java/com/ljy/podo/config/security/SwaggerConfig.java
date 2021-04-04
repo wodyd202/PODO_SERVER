@@ -38,6 +38,8 @@ public class SwaggerConfig {
                         RequestHandlerSelectors
                         .basePackage("com.ljy.podo.attention.api"),
                         RequestHandlerSelectors
+                        .basePackage("com.ljy.podo.reAttention.api"),
+                        RequestHandlerSelectors
     					.basePackage("com.ljy.podo.portfolio.api"),
     					RequestHandlerSelectors
     					.basePackage("com.ljy.podo.interest.api")

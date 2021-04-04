@@ -40,6 +40,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		.antMatchers(HttpMethod.PUT,"/api/v1/attention").authenticated()
 		.antMatchers(HttpMethod.DELETE,"/api/v1/attention").authenticated()
 
+		.antMatchers(HttpMethod.GET,"/api/v1/re-attention").permitAll()
+		.antMatchers(HttpMethod.POST,"/api/v1/re-attention").authenticated()
+		.antMatchers(HttpMethod.PUT,"/api/v1/re-attention").authenticated()
+		.antMatchers(HttpMethod.DELETE,"/api/v1/re-attention").authenticated()
+
 		.antMatchers(HttpMethod.GET,"/api/v1/interest").authenticated()
 		.antMatchers(HttpMethod.POST,"/api/v1/interest").authenticated()
 		.antMatchers(HttpMethod.DELETE,"/api/v1/interest").authenticated()

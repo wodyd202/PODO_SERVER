@@ -44,7 +44,7 @@ public class SimpleAttentionRepository implements AttentionRepository {
 		JPAQuery<AttentionListData> query = new JPAQuery<>(em);
 		query = query.from(attention).where(createBooleanExpression(search))
 				.select(Projections.constructor(AttentionListData.class, 
-						attention.attentionId,
+						attention.attentionId().value,
 						attention.content().value,
 						attention.writer().value,
 						attention.createDate
@@ -56,7 +56,7 @@ public class SimpleAttentionRepository implements AttentionRepository {
 	@Override
 	public Optional<Attention> findById(AttentionId attentionId) {
 		JPAQuery<Attention> query = new JPAQuery<>(em);
-		return Optional.ofNullable(query.from(attention).where(attention.attentionId.eq(attentionId)).fetchOne());
+		return Optional.ofNullable(query.from(attention).where(attention.attentionId().eq(attentionId)).fetchOne());
 	}
 	
 	private BooleanBuilder createBooleanExpression(AttentionSearchDTO dto) {
