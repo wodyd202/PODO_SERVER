@@ -1,5 +1,9 @@
 package com.ljy.podo.portfolio.service.updatePortfolio.service;
 
+import java.io.IOException;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ljy.podo.common.RegisterService;
 import com.ljy.podo.common.Validator;
 import com.ljy.podo.portfolio.PortfolioId;
@@ -8,25 +12,39 @@ import com.ljy.podo.portfolio.Writer;
 import com.ljy.podo.portfolio.aggregate.Portfolio;
 import com.ljy.podo.portfolio.aggregate.exception.InvalidPortfolioException;
 import com.ljy.podo.portfolio.aggregate.exception.PortfolioNotFindException;
+import com.ljy.podo.portfolio.infrastructure.PortfolioElasticsearchRepository;
 import com.ljy.podo.portfolio.infrastructure.PortfolioRepository;
 import com.ljy.podo.portfolio.service.updatePortfolio.UpdatePortfolio;
 
 public class PortfolioUpdateService extends RegisterService<UpdatePortfolio> {
 
 	private PortfolioRepository portfolioRepository;
-
+	private PortfolioElasticsearchRepository portfolioElasticsearchRepository;
+	
 	@Override
 	protected void afterValidation(UpdatePortfolio obj) {
 	}
 
 	@Override
 	protected void reigsterEntity(UpdatePortfolio obj) {
-		Portfolio portfolio = portfolioRepository.findById(new PortfolioId(obj.getId()))
-				.orElseThrow(() -> new PortfolioNotFindException("존재하지 않는 포트폴리오 입니다.", "portfolio"));
-		verfyAleadyDeletePortfolio(portfolio);
-		verfyIsMyPortfolio(obj, portfolio);
-		verfyChangeAbleState(obj, portfolio);
-		portfolio.update(obj);
+		try {
+			Portfolio portfolio = portfolioRepository.findById(new PortfolioId(obj.getId()))
+					.orElseThrow(() -> new PortfolioNotFindException("존재하지 않는 포트폴리오 입니다.", "portfolio"));
+			verfyAleadyDeletePortfolio(portfolio);
+			verfyIsMyPortfolio(obj, portfolio);
+			verfyChangeAbleState(obj, portfolio);
+			portfolio.update(obj);
+			persistEntityIntoElasticsearch(portfolio);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Transactional
+	private void persistEntityIntoElasticsearch(Portfolio entity) throws IOException {
+		if(portfolioElasticsearchRepository != null) {
+			portfolioElasticsearchRepository.update(entity);
+		}
 	}
 
 	private void verfyAleadyDeletePortfolio(Portfolio portfolio) {
@@ -50,6 +68,12 @@ public class PortfolioUpdateService extends RegisterService<UpdatePortfolio> {
 	public PortfolioUpdateService(Validator<UpdatePortfolio> validate, PortfolioRepository portfolioRepository) {
 		super(validate);
 		this.portfolioRepository = portfolioRepository;
+	}
+
+	public PortfolioUpdateService(Validator<UpdatePortfolio> validate, PortfolioRepository portfolioRepository,PortfolioElasticsearchRepository portfolioElasticsearchRepository) {
+		super(validate);
+		this.portfolioRepository = portfolioRepository;
+		this.portfolioElasticsearchRepository = portfolioElasticsearchRepository;
 	}
 
 }

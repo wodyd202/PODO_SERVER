@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.ljy.podo.portfolio.infrastructure.SimplePortfolioElasticsearchRepository;
 import com.ljy.podo.portfolio.infrastructure.SimplePortfolioRepository;
 import com.ljy.podo.portfolio.service.deletePortoflio.service.PortfolioDeleteService;
 import com.ljy.podo.portfolio.service.loadPortfolio.service.PortfolioLoadService;
@@ -18,6 +19,9 @@ public class PortfolioConfig {
 	
 	@Autowired
 	private SimplePortfolioRepository portfolioRepository;
+	
+	@Autowired
+	private SimplePortfolioElasticsearchRepository portfolioElasticsearchRepository;
 	
 	@Bean
 	public PortfolioFileUploadService portfolioFileUploadService() {
@@ -36,17 +40,17 @@ public class PortfolioConfig {
 	
 	@Bean
 	public PortfolioRegisterService portfolioRegisterService() {
-		return new PortfolioRegisterService(registerPortfolioValidator(), portfolioRepository);
+		return new PortfolioRegisterService(registerPortfolioValidator(), portfolioRepository, portfolioElasticsearchRepository);
 	}
 	
 	@Bean
 	public PortfolioUpdateService portfolioUpdateService() {
-		return new PortfolioUpdateService(updatePortfolioValidator(), portfolioRepository);
+		return new PortfolioUpdateService(updatePortfolioValidator(), portfolioRepository, portfolioElasticsearchRepository);
 	}
 	
 	@Bean
 	public PortfolioDeleteService portfolioDeleteService() {
-		return new PortfolioDeleteService(portfolioRepository);
+		return new PortfolioDeleteService(portfolioRepository, portfolioElasticsearchRepository);
 	}
 	
 	@Bean

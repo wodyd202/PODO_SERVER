@@ -1,0 +1,58 @@
+삭제 DELETE
+
+http://localhost:9200/podo
+
+재생성 PUT
+
+http://localhost:9200/podo
+{
+   "settings": {
+      "analysis": {
+         "analyzer": {
+            "my_html_analyzer": {
+               "type": "custom",
+               "tokenizer": "nori_tokenizer",
+               "char_filter": [
+                  "html_strip"
+               ]
+            },
+            "parsed_analyzer": {
+               "type": "custom",
+               "tokenizer": "keyword",
+               "char_filter": [
+                  "html_strip"
+               ]
+            }
+         }
+      }
+   }
+}
+
+매핑 PUT
+http://localhost:9200/podo/_mapping
+{
+  "properties": {
+    "content": { 
+      "type":"text",
+      "analyzer" : "my_html_analyzer",
+      "fielddata": true,
+      "fields": {
+            "parsed": {
+                "type": "text",
+                "analyzer": "parsed_analyzer"
+            }
+        }
+    },
+    "title": { 
+      "type":"text",
+      "analyzer" : "my_html_analyzer",
+      "fielddata": true,
+      "fields": {
+            "parsed": {
+                "type": "text",
+                "analyzer": "parsed_analyzer"
+            }
+        }
+    }
+  }
+} 
