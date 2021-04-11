@@ -25,14 +25,19 @@ public class PortfolioSearchDTO {
 	private Date endDate;
 	private int size;
 	private int page;
+	private String keyword;
 	private String major;
 	private PortfolioState state;
 	private ShowType showType;
-
+	
+	public void setUser(User user) {
+		this.email = user.getEmail().toString();
+	}
+	
 	public void setMajor(User user) {
 		this.major = user.getMajor().toString();
 		this.showType = ShowType.PUBLIC;
-		this.state = PortfolioState.CREATE; 
+		this.state = PortfolioState.CREATE;
 	}
 	
 	public void setToday() {
@@ -51,4 +56,5 @@ public class PortfolioSearchDTO {
 		this.email = user.getEmail().toString();
 		this.state = PortfolioState.TEMPORARY;
 	}
+
 }

@@ -1,5 +1,6 @@
 package com.ljy.podo.portfolio.api;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import com.ljy.podo.portfolio.PortfolioId;
 import com.ljy.podo.portfolio.PortfolioState;
 import com.ljy.podo.portfolio.aggregate.exception.InvalidPortfolioException;
 import com.ljy.podo.portfolio.aggregate.exception.PortfolioNotFindException;
+import com.ljy.podo.portfolio.infrastructure.SimplePortfolioElasticsearchRepository;
 import com.ljy.podo.portfolio.service.loadPortfolio.PortfolioSearchDTO;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioFullData;
 import com.ljy.podo.portfolio.service.loadPortfolio.projection.PortfolioList;
@@ -28,7 +30,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PortfolioLoadAPI {
 	private final PortfolioLoadService portfolioRepository;
-
+	private final SimplePortfolioElasticsearchRepository elasticsearchRepository;
+	
+	@GetMapping("recommand")
+	public ResponseEntity<List<PortfolioListData>> recommand(PortfolioSearchDTO searchDTO, @LoginUser User user) throws IOException{
+		searchDTO.setMajor(user);
+		searchDTO.setUser(user);
+		List<PortfolioListData> findAll = elasticsearchRepository.recomand(searchDTO);
+		elasticsearchRepository.saveSearchKeyword(searchDTO);
+		return new ResponseEntity<>(findAll,HttpStatus.OK);
+	}
+	
+	@GetMapping("search")
+	public ResponseEntity<List<PortfolioListData>> search(PortfolioSearchDTO searchDTO, @LoginUser User user) throws IOException{
+		searchDTO.setMajor(user);
+		List<PortfolioListData> findAll = elasticsearchRepository.findAll(searchDTO);
+		elasticsearchRepository.saveSearchKeyword(searchDTO);
+		return new ResponseEntity<>(findAll,HttpStatus.OK);
+	}
+	
 	@GetMapping("count")
 	public ResponseEntity<Long> countAll(){
 		PortfolioSearchDTO searchDTO = PortfolioSearchDTO.builder()

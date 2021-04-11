@@ -26,12 +26,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 		.antMatchers(HttpMethod.GET,"/api/v1/major").permitAll()
 		
-		.antMatchers(HttpMethod.GET,"/api/v1/portfolio").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/v1/portfolio").authenticated()
 		.antMatchers(HttpMethod.POST,"/api/v1/portfolio/fileUpload").authenticated()
 		.antMatchers(HttpMethod.PUT,"/api/v1/portfolio").authenticated()
 		.antMatchers(HttpMethod.DELETE,"/api/v1/portfolio").authenticated()
 		
+		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/search").authenticated()
+		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/recommand").authenticated()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-temporary").authenticated()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/is-today").permitAll()
 		.antMatchers(HttpMethod.GET,"/api/v1/portfolio/equal-major").permitAll()

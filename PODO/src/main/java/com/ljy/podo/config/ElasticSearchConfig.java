@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import com.ljy.customConfig.EnableElasticsearchInitModule;
 
 @Configuration
-@EnableElasticsearchInitModule(value = "true")
+@EnableElasticsearchInitModule(value = "false")
 public class ElasticSearchConfig {
 
 	@Value("${spring.elasticsearch.host}")

@@ -1,68 +1,45 @@
 package com.ljy.podo.portfolio.service;
 
-import java.util.UUID;
+import java.io.IOException;
+import java.util.Collection;
 
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ljy.podo.portfolio.PortfolioId;
-import com.ljy.podo.portfolio.PortfolioState;
-import com.ljy.podo.portfolio.ShowType;
-import com.ljy.podo.portfolio.aggregate.Portfolio;
-import com.ljy.podo.portfolio.infrastructure.PortfolioRepository;
-import com.ljy.podo.portfolio.service.loadPortfolio.PortfolioSearchDTO;
-import com.ljy.podo.portfolio.service.loadPortfolio.service.PortfolioLoadService;
-import com.ljy.podo.portfolio.service.registerPortfolio.RegisterPortfolio;
-import com.ljy.podo.user.Major;
-
 @SpringBootTest
 public class PortfolioLoadServiceTest {
 	
-	@Autowired	
-	PortfolioLoadService portfolioLoadService;
-
 	@Autowired
-	private PortfolioRepository portfolioRepository;
-	
+	private RestHighLevelClient client;
+
 	@Test
-	void load_1() {
-		portfolioRepository.save(new Portfolio(new PortfolioId(UUID.randomUUID().toString()), RegisterPortfolio.builder()
-				.title("타이틀")
-				.header("헤더")
-				.content("내용")
-				.showType(ShowType.PUBLIC)
-				.state(PortfolioState.CREATE)
-				.writer("wodyd202@naver.com")
-				.major(new Major("컴퓨터"))
-				.build()));
-		portfolioRepository.save(new Portfolio(new PortfolioId(UUID.randomUUID().toString()), RegisterPortfolio.builder()
-				.title("타이틀")
-				.header("헤더")
-				.content("내용")
-				.showType(ShowType.PUBLIC)
-				.state(PortfolioState.CREATE)
-				.writer("wodyd202@naver.com")
-				.major(new Major("컴퓨터"))
-				.build()));
-		portfolioRepository.save(new Portfolio(new PortfolioId(UUID.randomUUID().toString()), RegisterPortfolio.builder()
-				.title("타이틀")
-				.header("헤더")
-				.content("내용")
-				.showType(ShowType.PUBLIC)
-				.state(PortfolioState.CREATE)
-				.writer("wodyd202@naver.com")
-				.major(new Major("컴퓨터"))
-				.build()));
-		System.out.println("===============================================================================");
-		PortfolioSearchDTO searchDTO = PortfolioSearchDTO
-				.builder()
-				.page(0)
-				.size(9)
-				.email("wodyd202@naver.com")
-				.build();
-		searchDTO.setToday();
-		portfolioLoadService.findAll(searchDTO);
-		System.out.println("===============================================================================");
+	void load_1() throws IOException {
+		TermsAggregationBuilder aggregationBuilder =  AggregationBuilders
+															.terms("keywords")
+															.field("keyword")
+															.size(3);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		searchSourceBuilder.aggregation(aggregationBuilder);
+		searchSourceBuilder.size(0);
+		SearchRequest request = new SearchRequest("podo-search");
+		request.source(searchSourceBuilder);
+
+		SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+		Terms terms = response.getAggregations().get("keywords");
+		Collection<? extends Bucket> buckets = terms.getBuckets();
+		buckets.forEach(c->{
+			System.out.println(c.getKey().toString());
+		});
 	}
 }
