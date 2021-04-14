@@ -11,5 +11,5 @@ import org.springframework.context.annotation.Import;
 @Target(ElementType.TYPE)
 @Import(ElasticsearchImportSelector.class)
 public @interface EnableElasticsearchInitModule {
-	String value() default "";
+	boolean init() default true;
 }

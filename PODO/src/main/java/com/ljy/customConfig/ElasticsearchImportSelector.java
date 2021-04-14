@@ -11,8 +11,8 @@ public class ElasticsearchImportSelector implements ImportSelector {
 		AnnotationAttributes attributes = AnnotationAttributes.fromMap(
 				importingClassMetadata.getAnnotationAttributes(EnableElasticsearchInitModule.class.getName(), false));
 
-		String value = attributes.getString("value");
-		if ("true".equals(value)) {
+		boolean init = attributes.getBoolean("init");
+		if (init) {
 			return new String[] { ElasticSearchInitialConfig.class.getName() };
 		} else {
 			return new String[] {};
